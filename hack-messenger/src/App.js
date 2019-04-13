@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 // import MessageView from "./components/MessageView";
-import HomePage from "./components/Homepage"
+import HomePage from "./components/Homepage";
+import ChatApp from "./components/chatApp/ChatApp";
 
 class App extends Component {
   render() {
@@ -15,6 +16,9 @@ class App extends Component {
           </p>
           <div>
             <HomePage />
+          </div>
+          <div>
+            <ChatApp />
           </div>
           <a
             className="App-link"
