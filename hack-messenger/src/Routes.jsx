@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import HomePage from "./components/Homepage";
 import LandingPage from "./components/landingPage/LandingPage";
 import ChatApp from "./components/chatApp/ChatApp";
+import Dashboard from "../src/components/Dashboard";
 
 class Routes extends React.Component {
   render() {
@@ -28,6 +29,11 @@ class Routes extends React.Component {
                     Chat App
                   </NavLink>
                 </NavItem>
+                <NavItem className="NavItem">
+                  <NavLink tag={Link} to="/dashboard">
+                    Dashboard
+                  </NavLink>
+                </NavItem>
               </Nav>
             </Collapse>
           </Navbar>
@@ -35,6 +41,7 @@ class Routes extends React.Component {
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/messenger" component={HomePage} />
           <Route exact path="/chatApp" component={ChatApp} />
+          <Route exact path="/dashboard" component={Dashboard} />
         </Router>
       </React.Fragment>
     );
