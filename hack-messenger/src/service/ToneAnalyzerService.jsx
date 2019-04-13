@@ -1,20 +1,23 @@
-import Axios from "axios";
+import axios from "axios";
 
-const BaseURL =
-  "https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21&sentences=false";
-const analyzerPost = (payload, onSuccess, onError) => {
-  const config = {
-    method: "POST",
-    url: BaseURL,
-    data: payload,
-    withCredentials: true,
-    crossdomain: true,
-    headers: { "Content-Type": "application/json" }
-  };
+class ToneAnalyzerService {
+  static analyzerPost(data, onSuccess, onError) {
+    const url =
+      "https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21";
+    const config = {
+      method: "POST",
+      data: `{"text": "${data}"}`,
+      headers: { "Content-Type": "application/json" },
+      auth: {
+        username: "apikey",
+        password: "oOd0txFJhuRKte3lRX99XdHHUfs5LKEDlAdqD33RSk-x"
+      }
+    };
+    // axios.defaults.withCredentials = true;
+    axios(url, config)
+      .then(onSuccess)
+      .catch(onError);
+  }
+}
 
-  return Axios(config)
-    .then(onSuccess)
-    .catch(onError);
-};
-
-export { analyzerPost };
+export default ToneAnalyzerService;

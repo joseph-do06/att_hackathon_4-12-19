@@ -1,13 +1,24 @@
 import React from "react";
+// import ToneFunction from "./toneFunction";
 
-const MessageView = () => {
+const MessageView = props => {
   return (
     <div className="container">
       <div className="form-group">
         <label className="float-left">Message:</label>
-        <textarea className="col-md-12 form-control" />
+        <textarea
+          name="text"
+          value={props.text}
+          className="col-md-12 form-control"
+          onChange={props.onChange}
+        />
       </div>
-        <button className="btn btn-primary float-right">Send</button>
+      {/* <div>
+        <ToneFunction />
+      </div> */}
+      <button className="btn btn-primary float-right" onClick={props.onClick}>
+        Send
+      </button>
     </div>
   );
 };
