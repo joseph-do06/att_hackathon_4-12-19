@@ -24,7 +24,7 @@ class Homepage extends React.Component {
 
   onSuccess = response => {
     // let documentTonesResponse = response.document_tones.tones;
-    console.log(response.data.document_tone.tone_categories);
+    console.log(response.data);
 
     // this.setState({
     //     documentTones: documentTonesResponse
