@@ -13,7 +13,7 @@ class Messages extends Component {
       <li className={className}>
         <span className="avatar" style={{ backgroundColor: "tan" }} />
         <div className="Message-content">
-          <div className="username">{member.clientData.username}</div>
+          {/* <div className="username">{member.clientData.username}</div> */}
           <div className="text">{text}</div>
         </div>
       </li>

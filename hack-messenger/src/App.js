@@ -1,37 +1,19 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import React, { Component } from "react";
+
+import { withRouter } from "react-router-dom";
+import Routes from "./Routes";
 // import MessageView from "./components/MessageView";
-import HomePage from "./components/Homepage";
-import ChatApp from "./components/chatApp/ChatApp";
+// import HomePage from "./components/Homepage"
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <div>
-            <HomePage />
-          </div>
-          <div>
-            <ChatApp />
-          </div>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <React.Fragment>
+        <Routes />
+      </React.Fragment>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
