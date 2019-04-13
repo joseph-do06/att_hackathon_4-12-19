@@ -1,6 +1,8 @@
 import React from "react";
 import Messages from "./Messages";
 import Input from "./Input";
+//import Analyzer from "./Analyzer";
+//import ToneAnalyzerService from "../../service/ToneAnalyzerService";
 
 function randomName() {
   const adjectives = [
@@ -148,6 +150,7 @@ class ChatApp extends React.Component {
   constructor() {
     super();
     this.state = {
+      analyzed: [],
       messages: [],
       member: {
         username: randomName(),
@@ -180,18 +183,39 @@ class ChatApp extends React.Component {
     });
   };
 
+  //   analyzing = message => {
+  //     ToneAnalyzerService.analyzerPost(
+  //       message,
+  //       this.analyzingSuccess,
+  //       this.analyzingError
+  //     );
+  //   };
+
+  //     analyzingSuccess = response => {
+
+  //     }
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <h1>My Chat App</h1>
-          {this.state.messages && (
-            <Messages
-              messages={this.state.messages}
-              currentMember={this.state.member}
-            />
-          )}
-          <Input onSendMessage={this.onSendMessage} />
+      <div className="container">
+        <div className="row">
+          <div className="col-md-9">
+            <div className="App">
+              <div className="App-header">
+                <h1>My Chat App</h1>
+                {this.state.messages && (
+                  <Messages
+                    messages={this.state.messages}
+                    currentMember={this.state.member}
+                  />
+                )}
+                <Input onSendMessage={this.onSendMessage} />
+                <div className="col-md-3">
+                  {/* {<Analyzer analyzed={this.state.analyzed} />} */}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
