@@ -1,8 +1,7 @@
 import React from "react";
 import Messages from "./Messages";
 import Input from "./Input";
-//import Analyzer from "./Analyzer";
-//import ToneAnalyzerService from "../../service/ToneAnalyzerService";
+import ToneAnalyzerService from "../../service/ToneAnalyzerService";
 
 function randomName() {
   const adjectives = [
@@ -150,7 +149,8 @@ class ChatApp extends React.Component {
   constructor() {
     super();
     this.state = {
-      analyzed: [],
+      analyzed: "",
+      analyzedCollection: [],
       messages: [],
       member: {
         username: randomName(),
@@ -172,7 +172,9 @@ class ChatApp extends React.Component {
     room.on("data", (data, member) => {
       const messages = this.state.messages;
       messages.push({ member, text: data });
-      this.setState({ messages });
+      this.setState({ messages }, () => {
+        this.analyzing(data);
+      });
     });
   }
 
@@ -183,17 +185,31 @@ class ChatApp extends React.Component {
     });
   };
 
-  //   analyzing = message => {
-  //     ToneAnalyzerService.analyzerPost(
-  //       message,
-  //       this.analyzingSuccess,
-  //       this.analyzingError
-  //     );
-  //   };
+  analyzing = message => {
+    ToneAnalyzerService.analyzerPost(
+      message,
+      this.analyzingSuccess,
+      this.analyzingError
+    );
+  };
 
-  //     analyzingSuccess = response => {
+  analyzingSuccess = response => {
+    let newResponse = [];
+    for (let i = 0; i < response.data.document_tone.tones.length; i++) {
+      newResponse.push(response.data.document_tone.tones[i].tone_name);
+    }
+    let resultString = newResponse.toString(" ");
+    let newResult = [...this.state.analyzedCollection];
+    newResult.push(resultString);
+    this.setState({
+      analyzed: resultString,
+      analyzedCollection: newResult
+    });
+  };
 
-  //     }
+  analyzingError = error => {
+    console.log("Analyzing failed", error);
+  };
 
   render() {
     return (
@@ -209,10 +225,11 @@ class ChatApp extends React.Component {
                     currentMember={this.state.member}
                   />
                 )}
-                <Input onSendMessage={this.onSendMessage} />
-                <div className="col-md-3">
-                  {/* {<Analyzer analyzed={this.state.analyzed} />} */}
-                </div>
+                <Input
+                  onSendMessage={this.onSendMessage}
+                  analyzing={this.analyzing}
+                />
+                {this.state.analyzed}
               </div>
             </div>
           </div>
