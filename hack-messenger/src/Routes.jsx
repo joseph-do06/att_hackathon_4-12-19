@@ -18,7 +18,7 @@ class Routes extends React.Component {
                                 </NavLink>
                             </NavItem>
                             <NavItem className="NavItem">
-                                <NavLink tag={Link} disabled to="/messenger">
+                                <NavLink tag={Link} to="/messenger">
                                     Messenger
                                 </NavLink>
                             </NavItem>
