@@ -2,6 +2,7 @@ import axios from "axios";
 
 class ToneAnalyzerService {
   static analyzerPost(data, onSuccess, onError) {
+    console.log("analyzer post fired:", data)
     const url =
       "https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21&sentences=false";
     const config = {

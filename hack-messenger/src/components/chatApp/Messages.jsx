@@ -17,7 +17,7 @@ class Messages extends Component {
         />
         <div className="Message-content">
           <div className="username">{member.clientData.username}</div>
-          <div className="text">{text}</div>
+          <div className="text">{text}Testing</div>
         </div>
       </li>
     );
@@ -36,13 +36,22 @@ class Messages extends Component {
   }
 
   render() {
-    const { messages } = this.props;
+    const { messages, sentiments } = this.props;
     return (
       <div>
         <div className="MessageContainer">
           <div className="MessagesList">
             <ul className="Messages-list">
-              {messages.map((m, index) => this.renderMessage(m, index))}
+              {messages.map((m, index) => {
+                console.log(m);
+                return this.renderMessage(m, index)
+              }
+                )}
+              <p>
+              {sentiments.map((sentiment, key) => {
+                return sentiment;
+              })}
+              </p>
               <div
                 style={{ float: "left", clear: "both" }}
                 ref={el => {
@@ -50,6 +59,7 @@ class Messages extends Component {
                 }}
               />
             </ul>
+            
           </div>
         </div>
       </div>

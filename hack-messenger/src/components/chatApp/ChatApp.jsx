@@ -152,6 +152,7 @@ class ChatApp extends React.Component {
       analyzed: "",
       analyzedCollection: [],
       messages: [],
+      sentiments: ["Happy", "Sad"],
       member: {
         username: randomName(),
         color: randomColor()
@@ -185,7 +186,8 @@ class ChatApp extends React.Component {
     });
   };
 
-  analyzing = message => {
+  analyzing = () => {
+    let message = "The first is a straight up horror with some campiness thrown in, in large part just because of the style and skills involved.";
     ToneAnalyzerService.analyzerPost(
       message,
       this.analyzingSuccess,
@@ -222,6 +224,7 @@ class ChatApp extends React.Component {
                 {this.state.messages && (
                   <Messages
                     messages={this.state.messages}
+                    sentiments={this.state.sentiments}
                     currentMember={this.state.member}
                   />
                 )}
