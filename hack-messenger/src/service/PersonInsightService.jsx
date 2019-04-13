@@ -1,8 +1,9 @@
 import Axios from "axios";
+import * as helpers from "./serviceHelper";
 
 const BaseURL =
   "https://gateway.watsonplatform.net/personality-insights/api/v3/profile?version=2017-10-13";
-const insightPost = (payload, onSuccess, onError) => {
+const insightPost = payload => {
   const config = {
     method: "POST",
     url: BaseURL,
@@ -13,11 +14,11 @@ const insightPost = (payload, onSuccess, onError) => {
   };
 
   return Axios(config)
-    .then(onSuccess)
-    .catch(onError);
+    .then(helpers.onGlobalSuccess)
+    .catch(helpers.onGlobalError);
 };
 
-const insightGetAll = (onSuccess, onError) => {
+const insightGetAll = () => {
   const config = {
     method: "GET",
     url: BaseURL,
@@ -27,11 +28,11 @@ const insightGetAll = (onSuccess, onError) => {
   };
 
   return Axios(config)
-    .then(onSuccess)
-    .catch(onError);
+    .then(helpers.onGlobalSuccess)
+    .catch(helpers.onGlobalError);
 };
 
-const insightGetById = (id, onSuccess, onError) => {
+const insightGetById = id => {
   const config = {
     method: "GET",
     url: BaseURL + "/" + id,
@@ -41,11 +42,11 @@ const insightGetById = (id, onSuccess, onError) => {
   };
 
   return Axios(config)
-    .then(onSuccess)
-    .catch(onError);
+    .then(helpers.onGlobalSuccess)
+    .catch(helpers.onGlobalError);
 };
 
-const insightUpdate = (payload, onSuccess, onError) => {
+const insightUpdate = payload => {
   const config = {
     method: "PUT",
     url: BaseURL + "/" + payload.id,
@@ -56,11 +57,11 @@ const insightUpdate = (payload, onSuccess, onError) => {
   };
 
   return Axios(config)
-    .then(onSuccess)
-    .catch(onError);
+    .then(helpers.onGlobalSuccess)
+    .catch(helpers.onGlobalError);
 };
 
-const insightDelete = (id, onSuccess, onError) => {
+const insightDelete = id => {
   const config = {
     method: "DELETE",
     url: BaseURL + "/" + id,
@@ -70,8 +71,8 @@ const insightDelete = (id, onSuccess, onError) => {
   };
 
   return Axios(config)
-    .then(onSuccess)
-    .catch(onError);
+    .then(helpers.onGlobalSuccess)
+    .catch(helpers.onGlobalError);
 };
 
 export {
