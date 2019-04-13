@@ -149,7 +149,8 @@ class ChatApp extends React.Component {
   constructor() {
     super();
     this.state = {
-      analyzed: [],
+      analyzed: "",
+      analyzedCollection: [],
       messages: [],
       member: {
         username: randomName(),
@@ -171,7 +172,9 @@ class ChatApp extends React.Component {
     room.on("data", (data, member) => {
       const messages = this.state.messages;
       messages.push({ member, text: data });
-      this.setState({ messages });
+      this.setState({ messages }, () => {
+        this.analyzing(data);
+      });
     });
   }
 
@@ -195,8 +198,12 @@ class ChatApp extends React.Component {
     for (let i = 0; i < response.data.document_tone.tones.length; i++) {
       newResponse.push(response.data.document_tone.tones[i].tone_name);
     }
+    let resultString = newResponse.toString(" ");
+    let newResult = [...this.state.analyzedCollection];
+    newResult.push(resultString);
     this.setState({
-      documentTone: newResponse.toString(" ")
+      analyzed: resultString,
+      analyzedCollection: newResult
     });
   };
 
@@ -222,7 +229,7 @@ class ChatApp extends React.Component {
                   onSendMessage={this.onSendMessage}
                   analyzing={this.analyzing}
                 />
-                {this.state.documentTone}
+                {this.state.analyzed}
               </div>
             </div>
           </div>
