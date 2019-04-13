@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import MessageView from "./components/MessageView";
+// import MessageView from "./components/MessageView";
+import HomePage from "./components/Homepage"
 
 class App extends Component {
   render() {
@@ -13,7 +14,7 @@ class App extends Component {
             Edit <code>src/App.js</code> and save to reload.
           </p>
           <div>
-            <MessageView />
+            <HomePage />
           </div>
           <a
             className="App-link"
