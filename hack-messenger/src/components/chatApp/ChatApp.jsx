@@ -185,10 +185,12 @@ class ChatApp extends React.Component {
       <div className="App">
         <div className="App-header">
           <h1>My Chat App</h1>
-          <Messages
-            messages={this.state.messages}
-            currentMember={this.state.member}
-          />
+          {this.state.messages && (
+            <Messages
+              messages={this.state.messages}
+              currentMember={this.state.member}
+            />
+          )}
           <Input onSendMessage={this.onSendMessage} />
         </div>
       </div>

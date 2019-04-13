@@ -16,8 +16,8 @@ class Input extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="Input">
-          <form onSubmit={e => this.onSubmit(e)}>
+        <div className="chat-input">
+          <form onSubmit={e => this.onSubmit(e)} className="chat-form">
             <input
               onChange={e => this.onChange(e)}
               value={this.state.text}
@@ -25,7 +25,7 @@ class Input extends Component {
               placeholder="Enter your message"
               autoFocus={true}
             />
-            <button>Send</button>
+            <button className="chat-btn">Send</button>
           </form>
         </div>
       </React.Fragment>
