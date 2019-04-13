@@ -145,29 +145,39 @@ function randomColor() {
 }
 
 class ChatApp extends React.Component {
-  state = {
-    messages: [
-      {
-        text: "This is a test message!",
-        member: {
-          color: "blue",
-          username: "bluemoon"
-        }
+  constructor() {
+    super();
+    this.state = {
+      messages: [],
+      member: {
+        username: randomName(),
+        color: randomColor()
       }
-    ],
-    member: {
-      username: randomName(),
-      color: randomColor()
-    }
-  };
+    };
+    this.drone = new window.Scaledrone("eYSzFbz5CWV88jSw", {
+      data: this.state.member
+    });
+    this.drone.on("open", error => {
+      if (error) {
+        return console.error(error);
+      }
+      const member = { ...this.state.member };
+      member.id = this.drone.clientId;
+      this.setState({ member });
+    });
+    const room = this.drone.subscribe("observable-room");
+    room.on("data", (data, member) => {
+      const messages = this.state.messages;
+      messages.push({ member, text: data });
+      this.setState({ messages });
+    });
+  }
 
   onSendMessage = message => {
-    const messages = this.state.messages;
-    messages.push({
-      text: message,
-      member: this.state.member
+    this.drone.publish({
+      room: "observable-room",
+      message
     });
-    this.setState({ messages: messages });
   };
 
   render() {
@@ -175,12 +185,12 @@ class ChatApp extends React.Component {
       <div className="App">
         <div className="App-header">
           <h1>My Chat App</h1>
+          <Messages
+            messages={this.state.messages}
+            currentMember={this.state.member}
+          />
+          <Input onSendMessage={this.onSendMessage} />
         </div>
-        <Messages
-          messages={this.state.messages}
-          currentMember={this.state.member}
-        />
-        <Input onSendMessage={this.onSendMessage} />
       </div>
     );
   }
