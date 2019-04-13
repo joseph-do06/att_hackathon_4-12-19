@@ -1,7 +1,7 @@
 import React from "react";
 import ToneService from "../service/ToneAnalyzerService";
 import MessageView from "./MessageView";
-// import ToneFunction from "./toneFunction";
+import logo from "../logo.svg";
 
 class Homepage extends React.Component {
   state = {
@@ -37,11 +37,29 @@ class Homepage extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <MessageView
-          onClick={this.onClick}
-          text={this.state.text}
-          onChange={this.onChange}
-        />
+        <div className="App">
+          <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <p>
+              Edit <code>src/App.js</code> and save to reload.
+            </p>
+            <div>
+              <MessageView
+                onClick={this.onClick}
+                text={this.state.text}
+                onChange={this.onChange}
+              />
+            </div>
+            <a
+              className="App-link"
+              href="https://reactjs.org"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Learn React
+            </a>
+          </header>
+        </div>
       </React.Fragment>
     );
   }
