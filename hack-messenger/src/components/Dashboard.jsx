@@ -6,7 +6,8 @@ ReactChartkick.addAdapter(Chart);
 
 class Dashboard extends React.Component {
   state = {
-    username: "",
+    // username: this.props.username,
+    username: "ancientstar",
 
     bigFiveOpenness: "",
     adventurousness: "25",
@@ -49,8 +50,24 @@ class Dashboard extends React.Component {
     susceptibleToStress: ""
   };
   componentDidMount() {
-    PersonalityInsightsService.getAllMessages(this.state.username);
+    console.log(this.props.username);
+    PersonalityInsightsService.getAllMessages(this.state.username, (response) => {this.retrieved(response)});
   }
+
+  retrieved = (response) => {
+    let message = response.data.items;
+    let messageArr = [];
+    for(let i = 0; i < message.length; i++) {
+      messageArr.push(message[i].message)
+    }
+    let watsonData = messageArr.join(' ');
+    PersonalityInsightsService.InsightsPost(watsonData, (response) => {this.watsonSuccess(response)});
+  }
+
+  watsonSuccess = (response) => {
+    console.log(response);
+  }
+
   render() {
     return (
       <React.Fragment>

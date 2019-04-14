@@ -3,6 +3,8 @@ import Messages from "./Messages";
 import Input from "./Input";
 import ToneAnalyzerService from "../../service/ToneAnalyzerService";
 import ChatAppLayout from "./ChatAppLayout";
+import Dashboard from "../Dashboard";
+// import PersonalityInsightsService from "../../service/PersonalityInsightsService";
 
 import ReactChartkick, { ColumnChart } from "react-chartkick";
 import Chart from "chart.js";
@@ -42,7 +44,9 @@ class ChatApp extends React.Component {
         username: randomName(),
         color: randomColor()
       },
-      score: 0
+      score: 0,
+
+      ternary: false
     };
     this.drone = new window.Scaledrone("eYSzFbz5CWV88jSw", {
       data: this.state.member
@@ -70,6 +74,27 @@ class ChatApp extends React.Component {
       message
     });
   };
+
+  // sendToDB = message => {
+  //   let messageData = {
+  //     username: this.state.member.username,
+  //     message: message
+  //   };
+  //   PersonalityInsightsService.sendMessageToDB(
+  //     messageData,
+  //     this.successfulSend,
+  //     this.soSad
+  //   );
+  // };
+
+  // successfulSend = () => {
+  //   console.log("Yippee-ki-yay");
+  // };
+
+  // soSad = () => {
+  //   console.log("ohhh, so sad");
+  // };
+
   analyzing = message => {
     ToneAnalyzerService.analyzerPost(
       message,
@@ -169,12 +194,19 @@ class ChatApp extends React.Component {
   analyzingError = error => {
     console.log("Analyzing failed", error);
   };
+  ternaryChange = () => {
+    this.setState({
+      ...this.state,
+      ternary: true
+    });
+  };
 
   render() {
-    return (
-      <ChatAppLayout
-        chatApp={
-          // <div className="chat-container">
+    if (this.state.ternary === false) {
+      return (
+        <ChatAppLayout
+          chatApp={
+            // <div className="chat-container">
             <div className="row">
               <div className="col-md-12">
                 <div className="App">
@@ -186,7 +218,11 @@ class ChatApp extends React.Component {
                       />
                     )}
                   </div>
-                  <Input onSendMessage={this.onSendMessage} />
+                  <Input
+                    onSendMessage={this.onSendMessage}
+                    ternaryPage={this.ternaryChange}
+                    username={this.state.member.username}
+                  />
                   {this.state.documentTone}
                   {/* <ColumnChart
                     data={[
@@ -201,20 +237,25 @@ class ChatApp extends React.Component {
                 </div>
               </div>
             </div>
-          // </div>
-        }
-        graph={<ColumnChart
-          data={[
-            ["Anger", this.state.angerToneScore],
-            ["Disgust", this.state.disgustToneScore],
-            ["Fear", this.state.fearToneScore],
-            ["Joy", this.state.joyToneScore],
-            ["Sadness", this.state.sadnessToneScore]
-          ]}
-          colors={["#0F2924"]}
-        />}
-      />
-    );
+            // </div>
+          }
+          graph={
+            <ColumnChart
+              data={[
+                ["Anger", this.state.angerToneScore],
+                ["Disgust", this.state.disgustToneScore],
+                ["Fear", this.state.fearToneScore],
+                ["Joy", this.state.joyToneScore],
+                ["Sadness", this.state.sadnessToneScore]
+              ]}
+              colors={["#0F2924"]}
+            />
+          }
+        />
+      );
+    } else {
+      return <Dashboard username={this.state.member.username} />;
+    }
   }
 }
 export default ChatApp;

@@ -10,6 +10,8 @@ const ChatAppLayout = props => {
         <div className="cal-display-bottomleft cal-container">
           {props.graph}
         </div>
+        {/* <button className="btn btn-primary">Test</button> */}
+
       </div>
     </React.Fragment>
   );
