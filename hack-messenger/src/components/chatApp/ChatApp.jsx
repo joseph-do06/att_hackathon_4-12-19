@@ -151,10 +151,11 @@ class ChatApp extends React.Component {
     this.state = {
       analyzed: "",
       messages: [],
-      totalArray: [],
+      // totalArray: [],
       member: {
         username: randomName(),
-        color: randomColor()
+        color: randomColor(),
+        result: ""
       }
     };
     this.drone = new window.Scaledrone("eYSzFbz5CWV88jSw", {
@@ -200,12 +201,12 @@ class ChatApp extends React.Component {
   analyzing = message => {
     ToneAnalyzerService.analyzerPost(
       message,
-      response => this.analyzingSuccess(response, message),
+      this.analyzingSuccess,
       this.analyzingError
     );
   };
 
-  analyzingSuccess = (response, message) => {
+  analyzingSuccess = response => {
     let newArray = [];
     const tone = response.data.document_tone.tone_categories[0];
     if (tone.tones !== null || tone.tones.length > 0) {
@@ -215,20 +216,27 @@ class ChatApp extends React.Component {
         }
       }
       let newArrayToString = newArray.toString();
-      let newObj = { messages: message, results: newArrayToString };
-      let updatedArray = [...this.state.totalArray];
-      updatedArray.push(newObj);
+      // const member = { ...this.state.member };
+      // member.push({ result: newArrayToString });
+      // let newObj = { messages: message, results: newArrayToString };
+      // let updatedArray = [...this.state.totalArray];
+      // updatedArray.push(newObj);
       this.setState({
         analyzed: newArrayToString,
-        totalArray: updatedArray
+        // totalArray: updatedArray,
+        // member
+        member: { result: newArrayToString }
       });
     } else {
-      let newObj = { messages: message, results: "" };
-      let updatedArray = [...this.state.totalArray];
-      updatedArray.push(newObj);
+      // const member = { ...this.state.member };
+      // member.push({ result: "" });
+      // let newObj = { messages: message, results: "" };
+      // let updatedArray = [...this.state.totalArray];
+      // updatedArray.push(newObj);
       this.setState({
         analyzed: "",
-        totalArray: updatedArray
+        // totalArray: updatedArray
+        member: { result: "" }
       });
     }
   };
@@ -251,10 +259,7 @@ class ChatApp extends React.Component {
                     currentMember={this.state.member}
                   />
                 )}
-                <Input
-                  onSendMessage={this.onSendMessage}
-                  // analyzing={this.analyzing}
-                />
+                <Input onSendMessage={this.onSendMessage} />
                 {this.state.analyzed}
               </div>
             </div>
