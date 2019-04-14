@@ -18,7 +18,7 @@ class Messages extends Component {
         <div className="Message-content">
           <div className="username">{member.clientData.username}</div>
           <div className="text">{text}</div>
-          <div className="tone">Tone of message: {tone}</div>
+          <div className="tone">{tone}</div>
         </div>
       </li>
     );

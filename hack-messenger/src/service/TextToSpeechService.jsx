@@ -1,16 +1,16 @@
 import axios from "axios";
 
-class ToneAnalyzerService {
-  static analyzerPost(data, onSuccess, onError) {
+class TextToSpeechService {
+  static textSpeechPost(data, onSuccess, onError) {
     const url =
-      "https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19";
+      "https://stream.watsonplatform.net/text-to-speech/api/v1/synthesize";
     const config = {
       method: "POST",
       data: `{"text": "${data}"}`,
       headers: { "Content-Type": "application/json" },
       auth: {
         username: "apikey",
-        password: "oOd0txFJhuRKte3lRX99XdHHUfs5LKEDlAdqD33RSk-x"
+        password: "uZ8bYmkorWvrL8J4aEIWRm8zPYAXwDCAcRyIYzZKwhSN"
       }
     };
     axios(url, config)
@@ -19,4 +19,4 @@ class ToneAnalyzerService {
   }
 }
 
-export default ToneAnalyzerService;
+export default TextToSpeechService;
