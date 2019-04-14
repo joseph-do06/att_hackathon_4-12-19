@@ -197,9 +197,8 @@ class ChatApp extends React.Component {
   };
 
   textSpeechPostSuccess = response => {
-    // const data = response.data;
     this.setState({
-      data: response.config.url
+      data: response.data
     });
   };
 
