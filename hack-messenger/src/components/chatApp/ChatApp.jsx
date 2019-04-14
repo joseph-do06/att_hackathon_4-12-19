@@ -4,156 +4,21 @@ import Input from "./Input";
 import ToneAnalyzerService from "../../service/ToneAnalyzerService";
 import ReactChartkick, { ColumnChart } from "react-chartkick";
 import Chart from "chart.js";
-
 ReactChartkick.addAdapter(Chart);
-
 function randomName() {
-  const adjectives = [
-    "autumn",
-    "hidden",
-    "bitter",
-    "misty",
-    "silent",
-    "empty",
-    "dry",
-    "dark",
-    "summer",
-    "icy",
-    "delicate",
-    "quiet",
-    "white",
-    "cool",
-    "spring",
-    "winter",
-    "patient",
-    "twilight",
-    "dawn",
-    "crimson",
-    "wispy",
-    "weathered",
-    "blue",
-    "billowing",
-    "broken",
-    "cold",
-    "damp",
-    "falling",
-    "frosty",
-    "green",
-    "long",
-    "late",
-    "lingering",
-    "bold",
-    "little",
-    "morning",
-    "muddy",
-    "old",
-    "red",
-    "rough",
-    "still",
-    "small",
-    "sparkling",
-    "throbbing",
-    "shy",
-    "wandering",
-    "withered",
-    "wild",
-    "black",
-    "young",
-    "holy",
-    "solitary",
-    "fragrant",
-    "aged",
-    "snowy",
-    "proud",
-    "floral",
-    "restless",
-    "divine",
-    "polished",
-    "ancient",
-    "purple",
-    "lively",
-    "nameless"
-  ];
-  const nouns = [
-    "waterfall",
-    "river",
-    "breeze",
-    "moon",
-    "rain",
-    "wind",
-    "sea",
-    "morning",
-    "snow",
-    "lake",
-    "sunset",
-    "pine",
-    "shadow",
-    "leaf",
-    "dawn",
-    "glitter",
-    "forest",
-    "hill",
-    "cloud",
-    "meadow",
-    "sun",
-    "glade",
-    "bird",
-    "brook",
-    "butterfly",
-    "bush",
-    "dew",
-    "dust",
-    "field",
-    "fire",
-    "flower",
-    "firefly",
-    "feather",
-    "grass",
-    "haze",
-    "mountain",
-    "night",
-    "pond",
-    "darkness",
-    "snowflake",
-    "silence",
-    "sound",
-    "sky",
-    "shape",
-    "surf",
-    "thunder",
-    "violet",
-    "water",
-    "wildflower",
-    "wave",
-    "water",
-    "resonance",
-    "sun",
-    "wood",
-    "dream",
-    "cherry",
-    "tree",
-    "fog",
-    "frost",
-    "voice",
-    "paper",
-    "frog",
-    "smoke",
-    "star"
-  ];
+  const adjectives = ["ancient", "purple", "lively"];
+  const nouns = ["waterfall", "wind", "star"];
   const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
   const noun = nouns[Math.floor(Math.random() * nouns.length)];
   return adjective + noun;
 }
-
 function randomColor() {
   return "#" + Math.floor(Math.random() * 0xffffff).toString(16);
 }
-
 function toneAverage(currentAverage, num2, currentIndex) {
   currentAverage = currentAverage + num2 / currentIndex;
   return currentAverage;
 }
-
 class ChatApp extends React.Component {
   constructor() {
     super();
@@ -174,7 +39,8 @@ class ChatApp extends React.Component {
       member: {
         username: randomName(),
         color: randomColor()
-      }
+      },
+      score: 0
     };
     this.drone = new window.Scaledrone("eYSzFbz5CWV88jSw", {
       data: this.state.member
@@ -187,7 +53,6 @@ class ChatApp extends React.Component {
       member.id = this.drone.clientId;
       this.setState({ member });
     });
-
     const room = this.drone.subscribe("observable-room");
     room.on("data", (data, member) => {
       const messages = this.state.messages;
@@ -197,14 +62,12 @@ class ChatApp extends React.Component {
       });
     });
   }
-
   onSendMessage = message => {
     this.drone.publish({
       room: "observable-room",
       message
     });
   };
-
   analyzing = message => {
     ToneAnalyzerService.analyzerPost(
       message,
@@ -213,60 +76,6 @@ class ChatApp extends React.Component {
     );
   };
 
-  // analyzingSuccess = response => {
-  //   let newResponse = [];
-  //   let angerScore = 0;
-  //   let disgustScore = 0;
-  //   let fearScore = 0;
-  //   let joyScore = 0;
-  //   let sadnessScore = 0;
-
-  //     if (i === 0) {
-  //       angerScore = toneAverage(
-  //         this.state.angerToneScore,
-  //         response.data.document_tone.tone_categories[0].tones[i].score,
-  //         this.state.angerIndex + 1
-  //       );
-  //     } else if (i === 1) {
-  //       disgustScore = toneAverage(
-  //         this.state.disgustToneScore,
-  //         response.data.document_tone.tone_categories[0].tones[i].score,
-  //         this.state.disgustIndex + 1
-  //       );
-  //     } else if (i === 2) {
-  //       fearScore = toneAverage(
-  //         this.state.fearToneScore,
-  //         response.data.document_tone.tone_categories[0].tones[i].score,
-  //         this.state.fearIndex + 1
-  //       );
-  //     } else if (i === 3) {
-  //       joyScore = toneAverage(
-  //         this.state.joyToneScore,
-  //         response.data.document_tone.tone_categories[0].tones[i].score,
-  //         this.state.joyIndex + 1
-  //       );
-  //     } else {
-  //       sadnessScore = toneAverage(
-  //         this.state.sadnessToneScore,
-  //         response.data.document_tone.tone_categories[0].tones[i].score,
-  //         this.state.sadnessIndex + 1
-  //       );
-  //     }
-  //   }
-  //   this.setState({
-  //     documentTone: newResponse.toString(" "),
-  //     angerIndex: this.state.angerIndex + 1,
-  //     disgustIndex: this.state.disgustIndex + 1,
-  //     fearIndex: this.state.fearIndex + 1,
-  //     joyIndex: this.state.joyIndex + 1,
-  //     sadnessIndex: this.state.sadnessIndex + 1,
-  //     angerToneScore: angerScore,
-  //     disgustToneScore: disgustScore,
-  //     fearToneScore: fearScore,
-  //     joyToneScore: joyScore,
-  //     sadnessToneScore: sadnessScore
-  //   });
-  // };
   analyzingSuccess = (response, message) => {
     let newArray = [];
     let angerScore = 0;
@@ -277,43 +86,45 @@ class ChatApp extends React.Component {
     const tone = response.data.document_tone.tone_categories[0];
     if (tone.tones !== null || tone.tones.length > 0) {
       for (let i = 0; i < tone.tones.length; i++) {
+        if (i === 0) {
+          angerScore = toneAverage(
+            this.state.angerToneScore,
+            tone.tones[i].score,
+            this.state.angerIndex + 1
+          );
+        } else if (i === 1) {
+          disgustScore = toneAverage(
+            this.state.disgustToneScore,
+            tone.tones[i].score,
+            this.state.disgustIndex + 1
+          );
+        } else if (i === 2) {
+          fearScore = toneAverage(
+            this.state.fearToneScore,
+            tone.tones[i].score,
+            this.state.fearIndex + 1
+          );
+        } else if (i === 3) {
+          joyScore = toneAverage(
+            this.state.joyToneScore,
+            tone.tones[i].score,
+            this.state.joyIndex + 1
+          );
+        } else {
+          sadnessScore = toneAverage(
+            this.state.sadnessToneScore,
+            tone.tones[i].score,
+            this.state.sadnessIndex + 1
+          );
+        }
         if (tone.tones[i].score >= 0.5) {
           newArray.push(tone.tones[i].tone_name);
-          if (i === 0) {
-            angerScore = toneAverage(
-              this.state.angerToneScore,
-              tone.tones[i].score,
-              this.state.angerIndex + 1
-            );
-          } else if (i === 1) {
-            disgustScore = toneAverage(
-              this.state.disgustToneScore,
-              tone.tones[i].score,
-              this.state.disgustIndex + 1
-            );
-          } else if (i === 2) {
-            fearScore = toneAverage(
-              this.state.fearToneScore,
-              tone.tones[i].score,
-              this.state.fearIndex + 1
-            );
-          } else if (i === 3) {
-            joyScore = toneAverage(
-              this.state.joyToneScore,
-              tone.tones[i].score,
-              this.state.joyIndex + 1
-            );
-          } else {
-            sadnessScore = toneAverage(
-              this.state.sadnessToneScore,
-              tone.tones[i].score,
-              this.state.sadnessIndex + 1
-            );
-          }
+          this.setState({
+            score: tone.tones[i].score
+          });
         }
       }
       let newArrayToString = newArray.toString();
-      let newObj = { messages: message, results: newArrayToString };
       const updatedResults = newArrayToString;
       let updatedArray = [...this.state.totalArray];
       const updatedMessages = [...this.state.messages];
@@ -353,7 +164,6 @@ class ChatApp extends React.Component {
       });
     }
   };
-
   analyzingError = error => {
     console.log("Analyzing failed", error);
   };
@@ -365,7 +175,6 @@ class ChatApp extends React.Component {
           <div className="col-md-9">
             <div className="App">
               <div className="App-header">
-                <h1>My Chat App</h1>
                 {this.state.messages && (
                   <Messages
                     messages={this.state.messages}
@@ -384,7 +193,6 @@ class ChatApp extends React.Component {
                   ]}
                   colors={["#0F2924"]}
                 />
-                {this.state.analyzed}
               </div>
             </div>
           </div>
@@ -393,5 +201,4 @@ class ChatApp extends React.Component {
     );
   }
 }
-
 export default ChatApp;
