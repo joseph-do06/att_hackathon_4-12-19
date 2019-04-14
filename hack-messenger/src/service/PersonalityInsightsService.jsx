@@ -6,10 +6,10 @@ class PersonalityInsightsService {
       "https://gateway.watsonplatform.net/personality-insights/api/v3/profile?version=2017-10-13";
     const config = {
       method: "POST",
-      data: `{"text": "${data}"}`,
+      data: data,
       headers: {
-        "Content-Type": "application/json",
-        // "Accept": "application/json"
+        "Content-Type": "text/plain;charset=UTF-8 ",
+        "Accept": "application/json"
       },
       auth: {
         username: "apikey",

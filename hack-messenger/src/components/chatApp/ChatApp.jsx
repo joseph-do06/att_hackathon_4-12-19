@@ -197,7 +197,7 @@ class ChatApp extends React.Component {
   ternaryChange = () => {
     this.setState({
       ...this.state,
-      ternary: true
+      ternary: !this.state.ternary
     });
   };
 
@@ -224,16 +224,6 @@ class ChatApp extends React.Component {
                     username={this.state.member.username}
                   />
                   {this.state.documentTone}
-                  {/* <ColumnChart
-                    data={[
-                      ["Anger", this.state.angerToneScore],
-                      ["Disgust", this.state.disgustToneScore],
-                      ["Fear", this.state.fearToneScore],
-                      ["Joy", this.state.joyToneScore],
-                      ["Sadness", this.state.sadnessToneScore]
-                    ]}
-                    colors={["#0F2924"]}
-                  /> */}
                 </div>
               </div>
             </div>
@@ -254,7 +244,7 @@ class ChatApp extends React.Component {
         />
       );
     } else {
-      return <Dashboard username={this.state.member.username} />;
+      return <Dashboard username={this.state.member.username} ternaryPage={this.ternaryChange}/>;
     }
   }
 }

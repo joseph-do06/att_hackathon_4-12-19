@@ -79,6 +79,7 @@ class Dashboard extends React.Component {
             className="w3-jumbo w3-animate-top"
             style={{ paddingLeft: "400px" }}
           >
+        <button className="btn btn-outline-info float-right" style={{"margin-right":"200px"}} onClick={this.props.ternaryPage}>Back to Messenger</button> 
             Personality Insights
           </div>
           <div class="row">
@@ -237,6 +238,7 @@ class Dashboard extends React.Component {
             </div>
           </div>
         </div>
+
       </React.Fragment>
     );
   }
