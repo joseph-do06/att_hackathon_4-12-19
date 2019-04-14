@@ -216,41 +216,12 @@ class ChatApp extends React.Component {
         }
       }
       let newArrayToString = newArray.toString();
-<<<<<<< HEAD
-      // const member = { ...this.state.member };
-      // member.push({ result: newArrayToString });
-      // let newObj = { messages: message, results: newArrayToString };
-      // let updatedArray = [...this.state.totalArray];
-      // updatedArray.push(newObj);
       this.setState({
-        analyzed: newArrayToString,
-        // totalArray: updatedArray,
-        // member
-        member: { result: newArrayToString }
-=======
-      let newObj = { messages: message, results: newArrayToString };
-      const updatedResults = newArrayToString;
-      let updatedArray = [...this.state.totalArray];
-      const updatedMessages = [...this.state.messages]
-      updatedMessages[updatedMessages.length - 1].tone = updatedResults;
-      //updatedMessages.push(updatedResults)
-      console.log(updatedMessages)
-      debugger;
-      this.setState({
-        analyzed: newArrayToString,
-        totalArray: updatedArray,
-        messages: updatedMessages
->>>>>>> origin
+        analyzed: newArrayToString
       });
     } else {
-      // const member = { ...this.state.member };
-      // member.push({ result: "" });
-      // let newObj = { messages: message, results: "" };
-      // let updatedArray = [...this.state.totalArray];
-      // updatedArray.push(newObj);
       this.setState({
         analyzed: "",
-        // totalArray: updatedArray
         member: { result: "" }
       });
     }
