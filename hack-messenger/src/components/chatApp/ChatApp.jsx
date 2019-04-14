@@ -3,6 +3,8 @@ import Messages from "./Messages";
 import Input from "./Input";
 import ToneAnalyzerService from "../../service/ToneAnalyzerService";
 import TextToSpeechService from "../../service/TextToSpeechService";
+import ChatAppLayout from "./ChatAppLayout";
+
 import ReactChartkick, { ColumnChart } from "react-chartkick";
 import Chart from "chart.js";
 
@@ -207,42 +209,44 @@ class ChatApp extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-md-9">
-            <div className="App">
-              <div className="App-header">
-                {this.state.messages && (
-                  <Messages
-                    messages={this.state.messages}
-                    currentMember={this.state.member}
-                  />
-                )}
+      <ChatAppLayout
+        chatApp={
+          <div className="row">
+            <div className="col-md-12">
+              <div className="App">
+                <div className="App-header">
+                  {this.state.messages && (
+                    <Messages
+                      messages={this.state.messages}
+                      currentMember={this.state.member}
+                    />
+                  )}
+                </div>
                 <Input onSendMessage={this.onSendMessage} />
-                {/* <audio controls ref="audio">
-                  <source src={this.state.data} />
-                </audio> */}
                 <audio
                   ref="audio_tag"
                   src={this.state.data}
                   controls
                   autoPlay
                 />
-                <ColumnChart
-                  data={[
-                    ["Anger", this.state.angerToneScore],
-                    ["Disgust", this.state.disgustToneScore],
-                    ["Fear", this.state.fearToneScore],
-                    ["Joy", this.state.joyToneScore],
-                    ["Sadness", this.state.sadnessToneScore]
-                  ]}
-                  colors={["#0F2924"]}
-                />
+                {this.state.documentTone}
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        }
+        graph={
+          <ColumnChart
+            data={[
+              ["Anger", this.state.angerToneScore],
+              ["Disgust", this.state.disgustToneScore],
+              ["Fear", this.state.fearToneScore],
+              ["Joy", this.state.joyToneScore],
+              ["Sadness", this.state.sadnessToneScore]
+            ]}
+            colors={["#0F2924"]}
+          />
+        }
+      />
     );
   }
 }
