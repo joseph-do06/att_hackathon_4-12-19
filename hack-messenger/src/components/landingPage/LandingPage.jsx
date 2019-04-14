@@ -9,13 +9,13 @@ class LandingPage extends React.Component {
     return (
       <div className="bgimg w3-display-container w3-animate-opacity w3-text-white">
         <div className="w3-display-middle">
-          <h1 className="w3-jumbo w3-animate-top">COMING SOON</h1>
+          <h1 className="w3-jumbo w3-animate-top">Sherlock Message Service</h1>
           <hr
             className="w3-border-grey"
             style={{ margin: "auto", width: "40%" }}
           />
           <p className="w3-large w3-center">Log In</p>
-          <div className="formDisplay">
+          <div className="formDisplay offset-3">
             <div className="form-group">
               <label className="col-md-9 offset-1">Email:</label>
               <input
