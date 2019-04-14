@@ -12,9 +12,9 @@ function randomName() {
   const noun = nouns[Math.floor(Math.random() * nouns.length)];
   return adjective + noun;
 }
-function randomColor() {
-  return "#" + Math.floor(Math.random() * 0xffffff).toString(16);
-}
+// function randomColor() {
+//   return "#" + Math.floor(Math.random() * 0xffffff).toString(16);
+// }
 function toneAverage(currentAverage, num2, currentIndex) {
   currentAverage = currentAverage + num2 / currentIndex;
   return currentAverage;
@@ -37,8 +37,7 @@ class ChatApp extends React.Component {
       messages: [],
       totalArray: [],
       member: {
-        username: randomName(),
-        color: randomColor()
+        username: randomName()
       },
       score: 0
     };
