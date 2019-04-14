@@ -1,10 +1,11 @@
 .App {
   text-align: center;
-  background-color: #262626;
+  /* background-color: #262626; */
+  background-color: rgba(25, 25, 25, 0.9);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100vh;
+  height: 100%;
 }
 
 .App-logo {
@@ -14,7 +15,7 @@
 }
 
 .App-header {
-  background-color: #262626;
+  /* background-color: #262626; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,6 +23,11 @@
   font-size: calc(10px + 2vmin);
   color: white;
   overflow: visible;
+  width: 100%;
+  padding: 20px;
+}
+
+.App-header div {
   width: 100%;
 }
 
@@ -53,7 +59,7 @@
 } */
 
 /*===================
-| | ChatApp |  |
+| | | Messenger | | |
 ===================*/
 
 .Messages-list {
@@ -98,11 +104,12 @@
 .Message-content > .username {
   display: block;
   color: gray;
-  font-size: 14px;
+  font-size: 20px;
   padding-bottom: 4px;
 }
 
 .Message-content > .text {
+  font-size: initial;
   padding: 10px;
   max-width: 400px;
   margin: 0;
@@ -114,8 +121,8 @@
 
 .Message-content > .tone {
   display: block;
-  color: gray;
-  font-size: 14px;
+  color: yellow;
+  font-size: 20px;
   padding-bottom: 4px;
 }
 
@@ -123,7 +130,7 @@
   background-color: green;
 }
 
-.chat-form {
+/* .chat-form {
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -147,6 +154,21 @@
   border: none;
   border-radius: 8px;
   margin-left: 10px;
+} */
+
+div.MessageContainer {
+  overflow-y: auto;
+  max-height: 350px;
+  height: 350px;
+}
+
+div.chat-container {
+  width: 700px;
+}
+
+canvas {
+  background: #c3cac8;
+  opacity: 0.7;
 }
 
 /* latin-ext */
@@ -220,20 +242,32 @@ body {
 }
 
 .w3-tooltip,
-.w3-display-container {
+.w3-display-container,
+.cal-display-container {
   position: relative;
   height: -webkit-fill-available;
 }
 
-.w3-display-middle {
+.w3-display-middle,
+.cal-display-middle {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.w3-jumbo {
-  font-size: 64px;
+.cal-display-middle {
+  width: 30%;
+}
+
+.w3-jumbo,
+.pL-jumbo,
+.cal-jumbo {
+  font-size: 3vw;
+}
+
+.cal-jumbo {
+  box-sizing: border-box;
 }
 
 .w3-animate-top {
@@ -302,4 +336,159 @@ hr {
   background: rgba(0, 0, 0, 0.5);
   padding: 10px;
   border-radius: 10px;
+  width: 50%;
+}
+
+/*==========================
+| | Personality Profile |  |
+==========================*/
+
+/* header portion */
+
+header.pL-container {
+  background-image: url(https://www.w3schools.com/w3images/forestbridge.jpg);
+  background-position: center;
+  background-size: cover;
+  padding: 128px 16px;
+}
+
+.pL-red,
+.pL-hover-red:hover {
+  color: #fff;
+  background-color: #0f2924;
+}
+
+.pL-center {
+  text-align: center;
+}
+
+.pL-margin {
+  margin: 16px;
+}
+
+/* .pL-jumbo {
+  font-size: 64px;
+} */
+
+.pL-xlarge {
+  font-size: 24px;
+}
+
+.pL-padding-large {
+  padding: 12px 24px;
+}
+
+.pL-margin-top {
+  margin-top: 16px;
+}
+
+.pL-large {
+  font-size: 18px;
+}
+
+/* grid one */
+
+.pL-padding-64 {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+div.container {
+  height: 408px;
+  max-width: none;
+  width: auto;
+}
+
+.pL-content {
+  max-width: 980px;
+}
+
+.pL-content,
+.pL-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pL-twothird {
+  float: left;
+  width: 66.66666%;
+}
+
+.pL-twothird h1,
+.pL-twothird h5 {
+  font-weight: 400;
+  margin: 10px 0;
+}
+
+.pL-padding-32 {
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+.pL-text-grey {
+  color: #757575;
+}
+
+.pL-third {
+  width: 33.33333%;
+  float: left;
+}
+
+.fa {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+img .pL-padding {
+  width: 50px;
+}
+
+img.fa-anchor {
+  width: 300px;
+}
+
+/* second grid */
+
+.pL-light-grey {
+  color: #000;
+  background-color: #f1f1f1;
+}
+
+img.fa-coffee {
+  width: 250px;
+}
+
+.pL-black {
+  color: #fff;
+  background-color: #000;
+}
+
+.pL-opacity {
+  opacity: 0.6;
+}
+
+/*======================
+| | Messanger Page |  |
+======================*/
+
+.bgimgChat {
+  background-image: url(https://www.w3schools.com/w3images/onepage_restaurant.jpg);
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+
+.cal-text-white {
+  color: #fff;
+}
+
+.cal-display-bottomleft {
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+}
+
+.cal-container {
+  padding: 0.01em 16px;
 }

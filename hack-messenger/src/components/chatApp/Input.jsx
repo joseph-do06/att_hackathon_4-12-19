@@ -12,7 +12,6 @@ class Input extends Component {
     e.preventDefault();
     this.setState({ text: "" });
     this.props.onSendMessage(this.state.text);
-    // this.props.analyzing(this.state.text);
   }
   render() {
     return (
@@ -21,12 +20,13 @@ class Input extends Component {
           <form onSubmit={e => this.onSubmit(e)} className="chat-form">
             <input
               onChange={e => this.onChange(e)}
+              className="col-md-8 offset-2 form-control"
               value={this.state.text}
               type="text"
               placeholder="Enter your message"
               autoFocus={true}
             />
-            <button className="chat-btn">Send</button>
+            <button className="chat-btn btn btn-outline-info col-md-8">Send</button>
           </form>
         </div>
       </React.Fragment>

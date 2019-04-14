@@ -11,10 +11,7 @@ class Messages extends Component {
       : "Messages-message";
     return (
       <li className={className} key={index}>
-        <span
-          className="avatar"
-          // style={{ backgroundColor: member.clientData.color }}
-        />
+        <span className="avatar" />
         <div className="Message-content">
           <div className="username">{member.clientData.username}</div>
           <div className="text">{text}</div>
