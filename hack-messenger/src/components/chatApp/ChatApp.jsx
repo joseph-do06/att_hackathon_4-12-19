@@ -2,12 +2,14 @@ import React from "react";
 import Messages from "./Messages";
 import Input from "./Input";
 import ToneAnalyzerService from "../../service/ToneAnalyzerService";
+import TextToSpeechService from "../../service/TextToSpeechService";
 import ChatAppLayout from "./ChatAppLayout";
 import Dashboard from "../Dashboard";
 // import PersonalityInsightsService from "../../service/PersonalityInsightsService";
 
 import ReactChartkick, { ColumnChart } from "react-chartkick";
 import Chart from "chart.js";
+
 ReactChartkick.addAdapter(Chart);
 function randomName() {
   const adjectives = ["ancient", "purple", "lively"];
@@ -15,9 +17,6 @@ function randomName() {
   const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
   const noun = nouns[Math.floor(Math.random() * nouns.length)];
   return adjective + noun;
-}
-function randomColor() {
-  return "#" + Math.floor(Math.random() * 0xffffff).toString(16);
 }
 function toneAverage(currentAverage, num2, currentIndex) {
   currentAverage = currentAverage + num2 / currentIndex;
@@ -41,12 +40,12 @@ class ChatApp extends React.Component {
       messages: [],
       totalArray: [],
       member: {
-        username: randomName(),
-        color: randomColor()
+        username: randomName()
       },
       score: 0,
 
-      ternary: false
+      ternary: false,
+      data: null
     };
     this.drone = new window.Scaledrone("eYSzFbz5CWV88jSw", {
       data: this.state.member
@@ -74,26 +73,6 @@ class ChatApp extends React.Component {
       message
     });
   };
-
-  // sendToDB = message => {
-  //   let messageData = {
-  //     username: this.state.member.username,
-  //     message: message
-  //   };
-  //   PersonalityInsightsService.sendMessageToDB(
-  //     messageData,
-  //     this.successfulSend,
-  //     this.soSad
-  //   );
-  // };
-
-  // successfulSend = () => {
-  //   console.log("Yippee-ki-yay");
-  // };
-
-  // soSad = () => {
-  //   console.log("ohhh, so sad");
-  // };
 
   analyzing = message => {
     ToneAnalyzerService.analyzerPost(
@@ -190,6 +169,15 @@ class ChatApp extends React.Component {
         sadnessToneScore: sadnessScore
       });
     }
+    let newArrayToString = newArray.toString();
+    const updatedMessages = [...this.state.messages];
+    updatedMessages[updatedMessages.length - 1].tone = newArrayToString;
+    this.setState({
+      analyzed: newArrayToString,
+      messages: updatedMessages
+    });
+    let toneOfText = this.state.messages;
+    this.textToSpeech(message, toneOfText[toneOfText.length - 1].tone);
   };
   analyzingError = error => {
     console.log("Analyzing failed", error);
@@ -199,6 +187,30 @@ class ChatApp extends React.Component {
       ...this.state,
       ternary: !this.state.ternary
     });
+  };
+
+  textToSpeech = (message, tone) => {
+    let speech = "";
+    if (tone === "" || tone === null) {
+      speech = (message + ", no tone").toString();
+    } else {
+      speech = (message + ", tone is " + tone).toString();
+    }
+    TextToSpeechService.textSpeechPost(
+      speech,
+      response => this.textSpeechPostSuccess(response),
+      this.textSpeechPostError
+    );
+  };
+
+  textSpeechPostSuccess = response => {
+    this.setState({
+      data: response.data
+    });
+  };
+
+  textSpeechPostError = error => {
+    console.log("Failed to convert the text to speech", error);
   };
 
   render() {
