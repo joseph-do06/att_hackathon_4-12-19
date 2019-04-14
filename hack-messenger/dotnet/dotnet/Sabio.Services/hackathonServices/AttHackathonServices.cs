@@ -22,7 +22,6 @@ namespace Sabio.Services
 
         public void Insert(AttHackathonAddRequest model)
         {
-            //int Id = 0;
             _dataProvider.ExecuteNonQuery(
             "dbo.Hackathon_UserMessageInsert",
             inputParamMapper: delegate (SqlParameterCollection paramCol)
@@ -38,13 +37,8 @@ namespace Sabio.Services
                 paramCol.AddWithValue("@_ModifiedBy", model.ModifiedBy);
                 paramCol.AddWithValue("@_MessageId", model.MessageId);
                 paramCol.AddWithValue("@_Message", model.Message);
-            },
-        returnParameters: delegate (SqlParameterCollection paramCol)
-        {
-            //Id = (int)paramCol["@_Id"].Value;
-        }
+            }
         );
-            //return Id;
         }
 
         public List<AttHackathonDomain> SelectAllByUsername(string username)

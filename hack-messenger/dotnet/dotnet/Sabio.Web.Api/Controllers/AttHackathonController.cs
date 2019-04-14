@@ -50,24 +50,6 @@ namespace Sabio.Web.Api.Controllers
             return result;
         }
 
-        //[HttpPost]
-        //public ActionResult<ItemResponse<int>> Post(AttHackathonAddRequest model)
-        //{
-        //    ActionResult result = null;
-        //    try
-        //    {
-        //        //model.ModifiedBy = "User" + _authService.GetCurrentUserId();
-        //        ItemResponse<int> response = new ItemResponse<int>();
-        //        response.Item = _AttHackathonService.Insert(model);
-        //        result = Created201(response);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Logger.LogError(e.ToString());
-        //        result = StatusCode(500, new ErrorResponse(e.Message));
-        //    }
-        //    return result;
-        //}
         [HttpPost]
         public ActionResult<SuccessResponse> Post(AttHackathonAddRequest model)
         {
