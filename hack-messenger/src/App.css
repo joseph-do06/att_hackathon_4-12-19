@@ -107,6 +107,13 @@
   display: inline-block;
 }
 
+.Message-content > .tone {
+  display: block;
+  color: gray;
+  font-size: 14px;
+  padding-bottom: 4px;
+}
+
 .currentMember > .Message-content .text {
   background-color: green;
 }
