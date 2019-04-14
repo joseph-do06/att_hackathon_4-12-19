@@ -12,7 +12,6 @@ class Input extends Component {
     e.preventDefault();
     this.setState({ text: "" });
     this.props.onSendMessage(this.state.text);
-    // this.props.analyzing(this.state.text);
   }
   render() {
     return (

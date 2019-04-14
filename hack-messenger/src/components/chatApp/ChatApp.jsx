@@ -2,10 +2,12 @@ import React from "react";
 import Messages from "./Messages";
 import Input from "./Input";
 import ToneAnalyzerService from "../../service/ToneAnalyzerService";
+import TextToSpeechService from "../../service/TextToSpeechService";
 import ChatAppLayout from "./ChatAppLayout";
 
 import ReactChartkick, { ColumnChart } from "react-chartkick";
 import Chart from "chart.js";
+
 ReactChartkick.addAdapter(Chart);
 function randomName() {
   const adjectives = ["ancient", "purple", "lively"];
@@ -42,7 +44,8 @@ class ChatApp extends React.Component {
         username: randomName(),
         color: randomColor()
       },
-      score: 0
+      score: 0,
+      data: null
     };
     this.drone = new window.Scaledrone("eYSzFbz5CWV88jSw", {
       data: this.state.member
@@ -165,54 +168,83 @@ class ChatApp extends React.Component {
         sadnessToneScore: sadnessScore
       });
     }
+    let newArrayToString = newArray.toString();
+    const updatedMessages = [...this.state.messages];
+    updatedMessages[updatedMessages.length - 1].tone = newArrayToString;
+    this.setState({
+      analyzed: newArrayToString,
+      messages: updatedMessages
+    });
+    let toneOfText = this.state.messages;
+    this.textToSpeech(message, toneOfText[toneOfText.length - 1].tone);
   };
   analyzingError = error => {
     console.log("Analyzing failed", error);
+  };
+
+  textToSpeech = (message, tone) => {
+    let speech = "";
+    if (tone === "" || tone === null) {
+      speech = (message + ", no tone").toString();
+    } else {
+      speech = (message + ", tone is " + tone).toString();
+    }
+    TextToSpeechService.textSpeechPost(
+      speech,
+      response => this.textSpeechPostSuccess(response),
+      this.textSpeechPostError
+    );
+  };
+
+  textSpeechPostSuccess = response => {
+    this.setState({
+      data: response.data
+    });
+  };
+
+  textSpeechPostError = error => {
+    console.log("Failed to convert the text to speech", error);
   };
 
   render() {
     return (
       <ChatAppLayout
         chatApp={
-          // <div className="chat-container">
-            <div className="row">
-              <div className="col-md-12">
-                <div className="App">
-                  <div className="App-header">
-                    {this.state.messages && (
-                      <Messages
-                        messages={this.state.messages}
-                        currentMember={this.state.member}
-                      />
-                    )}
-                  </div>
-                  <Input onSendMessage={this.onSendMessage} />
-                  {this.state.documentTone}
-                  {/* <ColumnChart
-                    data={[
-                      ["Anger", this.state.angerToneScore],
-                      ["Disgust", this.state.disgustToneScore],
-                      ["Fear", this.state.fearToneScore],
-                      ["Joy", this.state.joyToneScore],
-                      ["Sadness", this.state.sadnessToneScore]
-                    ]}
-                    colors={["#0F2924"]}
-                  /> */}
+          <div className="row">
+            <div className="col-md-12">
+              <div className="App">
+                <div className="App-header">
+                  {this.state.messages && (
+                    <Messages
+                      messages={this.state.messages}
+                      currentMember={this.state.member}
+                    />
+                  )}
                 </div>
+                <Input onSendMessage={this.onSendMessage} />
+                <audio
+                  ref="audio_tag"
+                  src={this.state.data}
+                  controls
+                  autoPlay
+                />
+                {this.state.documentTone}
               </div>
             </div>
-          // </div>
+          </div>
         }
-        graph={<ColumnChart
-          data={[
-            ["Anger", this.state.angerToneScore],
-            ["Disgust", this.state.disgustToneScore],
-            ["Fear", this.state.fearToneScore],
-            ["Joy", this.state.joyToneScore],
-            ["Sadness", this.state.sadnessToneScore]
-          ]}
-          colors={["#0F2924"]}
-        />}
+        graph={
+          <ColumnChart
+            data={[
+              ["Anger", this.state.angerToneScore],
+              ["Disgust", this.state.disgustToneScore],
+              ["Fear", this.state.fearToneScore],
+              ["Joy", this.state.joyToneScore],
+              ["Sadness", this.state.sadnessToneScore]
+            ]}
+            colors={["#0F2924"]}
+          />
+        }
       />
     );
   }
