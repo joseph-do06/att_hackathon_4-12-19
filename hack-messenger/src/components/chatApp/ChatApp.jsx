@@ -219,8 +219,8 @@ class ChatApp extends React.Component {
       let updatedMessages = [...this.state.messages];
       let newObj = { messages: message, results: newArrayToString };
       updatedMessages.push(newObj);
-      // const updatedResults = newArrayToString;
-      let updatedArray = [...this.state.totalArray];
+      const updatedResults = newArrayToString;
+      let updatedResults = [...this.state.totalArray];
 
       newArrayToString = updatedMessages[updatedMessages.length - 1].tone;
       this.setState({
