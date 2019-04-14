@@ -7,7 +7,9 @@ class TextToSpeechService {
     const config = {
       method: "POST",
       data: `{"text": "${data}"}`,
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json"
+      },
       auth: {
         username: "apikey",
         password: "uZ8bYmkorWvrL8J4aEIWRm8zPYAXwDCAcRyIYzZKwhSN"
