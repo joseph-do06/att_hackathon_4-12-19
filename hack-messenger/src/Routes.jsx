@@ -1,9 +1,9 @@
 import React from "react";
 import { Navbar, Collapse, Nav, NavItem, NavLink } from "reactstrap";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import HomePage from "./components/Homepage";
 import LandingPage from "./components/landingPage/LandingPage";
 import ChatApp from "./components/chatApp/ChatApp";
+import Dashboard from "../src/components/Dashboard";
 
 class Routes extends React.Component {
   render() {
@@ -19,13 +19,13 @@ class Routes extends React.Component {
                   </NavLink>
                 </NavItem>
                 <NavItem className="NavItem">
-                  <NavLink tag={Link} to="/messenger">
+                  <NavLink tag={Link} to="/chatApp">
                     Messenger
                   </NavLink>
-                </NavItem>
+                </NavItem>              
                 <NavItem className="NavItem">
-                  <NavLink tag={Link} to="/chatApp">
-                    Chat App
+                  <NavLink tag={Link} to="/dashboard">
+                    Dashboard
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -33,8 +33,8 @@ class Routes extends React.Component {
           </Navbar>
 
           <Route exact path="/" component={LandingPage} />
-          <Route exact path="/messenger" component={HomePage} />
           <Route exact path="/chatApp" component={ChatApp} />
+          <Route exact path="/dashboard" component={Dashboard} />
         </Router>
       </React.Fragment>
     );

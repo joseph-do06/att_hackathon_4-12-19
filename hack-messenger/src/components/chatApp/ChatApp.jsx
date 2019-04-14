@@ -191,7 +191,7 @@ class ChatApp extends React.Component {
                     ["Joy", this.state.joyToneScore],
                     ["Sadness", this.state.sadnessToneScore]
                   ]}
-                  colors={["#0F2924"]}
+                  colors={["#ffffff"]}
                 />
               </div>
             </div>
