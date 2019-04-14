@@ -4,6 +4,8 @@ import Input from "./Input";
 import ToneAnalyzerService from "../../service/ToneAnalyzerService";
 import TextToSpeechService from "../../service/TextToSpeechService";
 import ChatAppLayout from "./ChatAppLayout";
+import Dashboard from "../Dashboard";
+// import PersonalityInsightsService from "../../service/PersonalityInsightsService";
 
 import ReactChartkick, { ColumnChart } from "react-chartkick";
 import Chart from "chart.js";
@@ -15,9 +17,6 @@ function randomName() {
   const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
   const noun = nouns[Math.floor(Math.random() * nouns.length)];
   return adjective + noun;
-}
-function randomColor() {
-  return "#" + Math.floor(Math.random() * 0xffffff).toString(16);
 }
 function toneAverage(currentAverage, num2, currentIndex) {
   currentAverage = currentAverage + num2 / currentIndex;
@@ -41,10 +40,11 @@ class ChatApp extends React.Component {
       messages: [],
       totalArray: [],
       member: {
-        username: randomName(),
-        color: randomColor()
+        username: randomName()
       },
       score: 0,
+
+      ternary: false,
       data: null
     };
     this.drone = new window.Scaledrone("eYSzFbz5CWV88jSw", {
@@ -73,6 +73,7 @@ class ChatApp extends React.Component {
       message
     });
   };
+
   analyzing = message => {
     ToneAnalyzerService.analyzerPost(
       message,
@@ -181,6 +182,12 @@ class ChatApp extends React.Component {
   analyzingError = error => {
     console.log("Analyzing failed", error);
   };
+  ternaryChange = () => {
+    this.setState({
+      ...this.state,
+      ternary: !this.state.ternary
+    });
+  };
 
   textToSpeech = (message, tone) => {
     let speech = "";
@@ -207,46 +214,50 @@ class ChatApp extends React.Component {
   };
 
   render() {
-    return (
-      <ChatAppLayout
-        chatApp={
-          <div className="row">
-            <div className="col-md-12">
-              <div className="App">
-                <div className="App-header">
-                  {this.state.messages && (
-                    <Messages
-                      messages={this.state.messages}
-                      currentMember={this.state.member}
-                    />
-                  )}
+    if (this.state.ternary === false) {
+      return (
+        <ChatAppLayout
+          chatApp={
+            // <div className="chat-container">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="App">
+                  <div className="App-header">
+                    {this.state.messages && (
+                      <Messages
+                        messages={this.state.messages}
+                        currentMember={this.state.member}
+                      />
+                    )}
+                  </div>
+                  <Input
+                    onSendMessage={this.onSendMessage}
+                    ternaryPage={this.ternaryChange}
+                    username={this.state.member.username}
+                  />
+                  {this.state.documentTone}
                 </div>
-                <Input onSendMessage={this.onSendMessage} />
-                <audio
-                  ref="audio_tag"
-                  src={this.state.data}
-                  controls
-                  autoPlay
-                />
-                {this.state.documentTone}
               </div>
             </div>
-          </div>
-        }
-        graph={
-          <ColumnChart
-            data={[
-              ["Anger", this.state.angerToneScore],
-              ["Disgust", this.state.disgustToneScore],
-              ["Fear", this.state.fearToneScore],
-              ["Joy", this.state.joyToneScore],
-              ["Sadness", this.state.sadnessToneScore]
-            ]}
-            colors={["#0F2924"]}
-          />
-        }
-      />
-    );
+            // </div>
+          }
+          graph={
+            <ColumnChart
+              data={[
+                ["Anger", this.state.angerToneScore],
+                ["Disgust", this.state.disgustToneScore],
+                ["Fear", this.state.fearToneScore],
+                ["Joy", this.state.joyToneScore],
+                ["Sadness", this.state.sadnessToneScore]
+              ]}
+              colors={["#0F2924"]}
+            />
+          }
+        />
+      );
+    } else {
+      return <Dashboard username={this.state.member.username} ternaryPage={this.ternaryChange}/>;
+    }
   }
 }
 export default ChatApp;

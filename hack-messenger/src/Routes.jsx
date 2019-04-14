@@ -25,11 +25,6 @@ class Routes extends React.Component {
                   </NavLink>
                 </NavItem>              
                 <NavItem className="NavItem">
-                  <NavLink tag={Link} to="/dashboard">
-                    Dashboard
-                  </NavLink>
-                </NavItem>
-                <NavItem className="NavItem">
                   <NavLink tag={Link} to="/profilePage">
                     Personality Breakdown
                   </NavLink>
