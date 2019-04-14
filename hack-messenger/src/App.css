@@ -1,6 +1,7 @@
 .App {
   text-align: center;
-  background-color: #262626;
+  /* background-color: #262626; */
+  background-color:rgba(25,25,25,0.9);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -14,7 +15,7 @@
 }
 
 .App-header {
-  background-color: #262626;
+  /* background-color: #262626; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,8 +23,12 @@
   font-size: calc(10px + 2vmin);
   color: white;
   overflow: visible;
-  width: min-content;
+  width: 100%;
   padding: 20px;
+}
+
+.App-header div{
+  width: 100%
 }
 
 .App-link {
@@ -57,7 +62,7 @@
 | | | Messenger | | |
 ===================*/
 
-/* .Messages-list {
+.Messages-list {
   padding: 20px 0;
   max-width: 900px;
   width: 100%;
@@ -103,6 +108,7 @@
 }
 
 .Message-content > .text {
+  font-size: initial;
   padding: 10px;
   max-width: 400px;
   margin: 0;
@@ -123,7 +129,7 @@
   background-color: green;
 }
 
-.chat-form {
+/* .chat-form {
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -149,7 +155,20 @@
   margin-left: 10px;
 } */
 
+div.MessageContainer {
+  overflow-y: auto;
+  max-height: 350px;
+  height: 350px;
+}
 
+div.chat-container {
+  width: 700px;
+}
+
+canvas {
+  background: #C3CAC8;
+  opacity: .7;
+}
 
 /* latin-ext */
 @font-face {
@@ -235,8 +254,16 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.cal-display-middle{
+  width: 30%;
+}
+
 .w3-jumbo, .pL-jumbo, .cal-jumbo {
   font-size: 64px;
+}
+
+.cal-jumbo {
+  box-sizing: border-box;
 }
 
 .w3-animate-top {
@@ -448,7 +475,7 @@ img.fa-coffee {
 .cal-display-bottomleft {
   position: absolute;
   left: 0;
-  bottom: 0;
+  bottom: 20px;
 }
 
 .cal-container {

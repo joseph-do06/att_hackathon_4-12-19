@@ -8,17 +8,7 @@ const ChatAppLayout = props => {
           {props.chatApp}
         </div>
         <div className="cal-display-bottomleft cal-container">
-          <p className="cal-xlarge">monday - friday 10-23 | saturday 14-02</p>
-          <p className="cal-large">42 village St, New York</p>
-          <p>
-            powered by{" "}
-            <a
-              href="https://www.calschools.com/calcss/default.asp"
-              target="_blank"
-            >
-              cal.css
-            </a>
-          </p>
+          {props.graph}
         </div>
       </div>
     </React.Fragment>

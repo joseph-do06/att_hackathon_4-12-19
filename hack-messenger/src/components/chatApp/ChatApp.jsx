@@ -174,9 +174,9 @@ class ChatApp extends React.Component {
     return (
       <ChatAppLayout
         chatApp={
-          <div className="container">
+          // <div className="chat-container">
             <div className="row">
-              <div className="col-md-9">
+              <div className="col-md-12">
                 <div className="App">
                   <div className="App-header">
                     {this.state.messages && (
@@ -188,7 +188,7 @@ class ChatApp extends React.Component {
                   </div>
                   <Input onSendMessage={this.onSendMessage} />
                   {this.state.documentTone}
-                  <ColumnChart
+                  {/* <ColumnChart
                     data={[
                       ["Anger", this.state.angerToneScore],
                       ["Disgust", this.state.disgustToneScore],
@@ -197,12 +197,22 @@ class ChatApp extends React.Component {
                       ["Sadness", this.state.sadnessToneScore]
                     ]}
                     colors={["#0F2924"]}
-                  />
+                  /> */}
                 </div>
               </div>
             </div>
-          </div>
+          // </div>
         }
+        graph={<ColumnChart
+          data={[
+            ["Anger", this.state.angerToneScore],
+            ["Disgust", this.state.disgustToneScore],
+            ["Fear", this.state.fearToneScore],
+            ["Joy", this.state.joyToneScore],
+            ["Sadness", this.state.sadnessToneScore]
+          ]}
+          colors={["#0F2924"]}
+        />}
       />
     );
   }
