@@ -2,6 +2,10 @@ import React from "react";
 import Messages from "./Messages";
 import Input from "./Input";
 import ToneAnalyzerService from "../../service/ToneAnalyzerService";
+import ReactChartkick, { ColumnChart } from "react-chartkick";
+import Chart from "chart.js";
+
+ReactChartkick.addAdapter(Chart);
 
 function randomName() {
   const adjectives = [
@@ -145,10 +149,25 @@ function randomColor() {
   return "#" + Math.floor(Math.random() * 0xffffff).toString(16);
 }
 
+function toneAverage(currentAverage, num2, currentIndex) {
+  currentAverage = currentAverage + num2 / currentIndex;
+  return currentAverage;
+}
+
 class ChatApp extends React.Component {
   constructor() {
     super();
     this.state = {
+      angerIndex: 0,
+      angerToneScore: 0,
+      disgustToneScore: 0,
+      disgustIndex: 0,
+      fearToneScore: 0,
+      fearIndex: 0,
+      joyToneScore: 0,
+      joyIndex: 0,
+      sadnessToneScore: 0,
+      sadnessIndex: 0,
       analyzed: [],
       messages: [],
       member: {
@@ -192,11 +211,64 @@ class ChatApp extends React.Component {
 
   analyzingSuccess = response => {
     let newResponse = [];
-    for (let i = 0; i < response.data.document_tone.tones.length; i++) {
-      newResponse.push(response.data.document_tone.tones[i].tone_name);
+    let angerScore = 0;
+    let disgustScore = 0;
+    let fearScore = 0;
+    let joyScore = 0;
+    let sadnessScore = 0;
+
+    for (
+      let i = 0;
+      i < response.data.document_tone.tone_categories[0].tones.length;
+      i++
+    ) {
+      newResponse.push(
+        response.data.document_tone.tone_categories[0].tones[i].tone_name
+      );
+      if (i === 0) {
+        angerScore = toneAverage(
+          this.state.angerToneScore,
+          response.data.document_tone.tone_categories[0].tones[i].score,
+          this.state.angerIndex + 1
+        );
+      } else if (i === 1) {
+        disgustScore = toneAverage(
+          this.state.disgustToneScore,
+          response.data.document_tone.tone_categories[0].tones[i].score,
+          this.state.disgustIndex + 1
+        );
+      } else if (i === 2) {
+        fearScore = toneAverage(
+          this.state.fearToneScore,
+          response.data.document_tone.tone_categories[0].tones[i].score,
+          this.state.fearIndex + 1
+        );
+      } else if (i === 3) {
+        joyScore = toneAverage(
+          this.state.joyToneScore,
+          response.data.document_tone.tone_categories[0].tones[i].score,
+          this.state.joyIndex + 1
+        );
+      } else {
+        sadnessScore = toneAverage(
+          this.state.sadnessToneScore,
+          response.data.document_tone.tone_categories[0].tones[i].score,
+          this.state.sadnessIndex + 1
+        );
+      }
     }
     this.setState({
-      documentTone: newResponse.toString(" ")
+      documentTone: newResponse.toString(" "),
+      angerIndex: this.state.angerIndex + 1,
+      disgustIndex: this.state.disgustIndex + 1,
+      fearIndex: this.state.fearIndex + 1,
+      joyIndex: this.state.joyIndex + 1,
+      sadnessIndex: this.state.sadnessIndex + 1,
+      angerToneScore: angerScore,
+      disgustToneScore: disgustScore,
+      fearToneScore: fearScore,
+      joyToneScore: joyScore,
+      sadnessToneScore: sadnessScore
     });
   };
 
@@ -223,6 +295,17 @@ class ChatApp extends React.Component {
                   analyzing={this.analyzing}
                 />
                 {this.state.documentTone}
+                <ColumnChart
+                  data={[
+                    ["Anger", this.state.angerToneScore],
+                    ["Disgust", this.state.disgustToneScore],
+                    ["Fear", this.state.fearToneScore],
+                    ["Joy", this.state.joyToneScore],
+                    ["Sadness", this.state.sadnessToneScore]
+                  ]}
+                  colors={["#0F2924"]}
+                  // style={{backgroundColor: "#FFF"}}
+                />
               </div>
             </div>
           </div>
