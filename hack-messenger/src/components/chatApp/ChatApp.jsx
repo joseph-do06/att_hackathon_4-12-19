@@ -2,6 +2,7 @@ import React from "react";
 import Messages from "./Messages";
 import Input from "./Input";
 import ToneAnalyzerService from "../../service/ToneAnalyzerService";
+import ChatAppLayout from "./ChatAppLayout"
 
 function randomName() {
   const adjectives = [
@@ -245,6 +246,7 @@ class ChatApp extends React.Component {
 
   render() {
     return (
+      <ChatAppLayout chatApp = {
       <div className="container">
         <div className="row">
           <div className="col-md-9">
@@ -257,16 +259,16 @@ class ChatApp extends React.Component {
                     currentMember={this.state.member}
                   />
                 )}
-                <Input
+              </div>
+              <Input
                   onSendMessage={this.onSendMessage}
                   // analyzing={this.analyzing}
                 />
                 {this.state.analyzed}
-              </div>
             </div>
           </div>
         </div>
-      </div>
+      </div>} />
     );
   }
 }
