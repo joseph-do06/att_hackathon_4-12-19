@@ -201,12 +201,12 @@ class ChatApp extends React.Component {
   analyzing = message => {
     ToneAnalyzerService.analyzerPost(
       message,
-      this.analyzingSuccess,
+      response => this.analyzingSuccess(response, message),
       this.analyzingError
     );
   };
 
-  analyzingSuccess = response => {
+  analyzingSuccess = (response, message) => {
     let newArray = [];
     const tone = response.data.document_tone.tone_categories[0];
     if (tone.tones !== null || tone.tones.length > 0) {
@@ -216,13 +216,25 @@ class ChatApp extends React.Component {
         }
       }
       let newArrayToString = newArray.toString();
+      let updatedMessages = [...this.state.messages];
+      let newObj = { messages: message, results: newArrayToString };
+      updatedMessages.push(newObj);
+      // const updatedResults = newArrayToString;
+      let updatedArray = [...this.state.totalArray];
+
+      newArrayToString = updatedMessages[updatedMessages.length - 1].tone;
       this.setState({
-        analyzed: newArrayToString
+        analyzed: newArrayToString,
+        totalArray: updatedArray,
+        messages: updatedMessages
       });
     } else {
+      let newObj = { messages: message, results: "" };
+      let updatedArray = [...this.state.totalArray];
+      updatedArray.push(newObj);
       this.setState({
         analyzed: "",
-        member: { result: "" }
+        totalArray: updatedArray
       });
     }
   };
