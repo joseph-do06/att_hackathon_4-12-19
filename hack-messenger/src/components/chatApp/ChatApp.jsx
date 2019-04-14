@@ -152,7 +152,6 @@ class ChatApp extends React.Component {
       analyzed: "",
       messages: [],
       totalArray: [],
-      // obj: { messsages: "", results: "" },
       member: {
         username: randomName(),
         color: randomColor()
@@ -169,11 +168,25 @@ class ChatApp extends React.Component {
       member.id = this.drone.clientId;
       this.setState({ member });
     });
+
+    //FOR DAREL
+    //   const room = this.drone.subscribe("observable-room");
+    //   room.on("data", (data, member) => {
+    //     const messages = this.state.messages;
+    //     messages.push({ member, text: data });
+    //     this.setState({ messages }, () => {
+    //       this.analyzing(messages);
+    //     });
+    //   });
+    // }
+
     const room = this.drone.subscribe("observable-room");
     room.on("data", (data, member) => {
       const messages = this.state.messages;
       messages.push({ member, text: data });
-      this.setState({ messages });
+      this.setState({ messages }, () => {
+        this.analyzing(data);
+      });
     });
   }
 
@@ -195,7 +208,6 @@ class ChatApp extends React.Component {
   analyzingSuccess = (response, message) => {
     let newArray = [];
     const tone = response.data.document_tone.tone_categories[0];
-    // console.log(tone);
     if (tone.tones !== null || tone.tones.length > 0) {
       for (let i = 0; i < tone.tones.length; i++) {
         if (tone.tones[i].score >= 0.5) {
@@ -241,7 +253,7 @@ class ChatApp extends React.Component {
                 )}
                 <Input
                   onSendMessage={this.onSendMessage}
-                  analyzing={this.analyzing}
+                  // analyzing={this.analyzing}
                 />
                 {this.state.analyzed}
               </div>
