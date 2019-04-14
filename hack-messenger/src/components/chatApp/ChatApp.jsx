@@ -222,7 +222,7 @@ class ChatApp extends React.Component {
       updatedMessages[updatedMessages.length - 1].tone = updatedResults;
       //updatedMessages.push(updatedResults)
       console.log(updatedMessages)
-      debugger;
+      //debugger;
       this.setState({
         analyzed: newArrayToString,
         totalArray: updatedArray,
