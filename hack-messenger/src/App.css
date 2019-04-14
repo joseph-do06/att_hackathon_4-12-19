@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   /* background-color: #262626; */
-  background-color:rgba(25,25,25,0.9);
+  background-color: rgba(25, 25, 25, 0.9);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -27,8 +27,8 @@
   padding: 20px;
 }
 
-.App-header div{
-  width: 100%
+.App-header div {
+  width: 100%;
 }
 
 .App-link {
@@ -166,8 +166,8 @@ div.chat-container {
 }
 
 canvas {
-  background: #C3CAC8;
-  opacity: .7;
+  background: #c3cac8;
+  opacity: 0.7;
 }
 
 /* latin-ext */
@@ -247,19 +247,22 @@ body {
   height: -webkit-fill-available;
 }
 
-.w3-display-middle, .cal-display-middle {
+.w3-display-middle,
+.cal-display-middle {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.cal-display-middle{
+.cal-display-middle {
   width: 30%;
 }
 
-.w3-jumbo, .pL-jumbo, .cal-jumbo {
-  font-size: 64px;
+.w3-jumbo,
+.pL-jumbo,
+.cal-jumbo {
+  font-size: 3vw;
 }
 
 .cal-jumbo {
@@ -332,6 +335,7 @@ hr {
   background: rgba(0, 0, 0, 0.5);
   padding: 10px;
   border-radius: 10px;
+  width: 50%
 }
 
 /*==========================
@@ -340,13 +344,17 @@ hr {
 
 /* header portion */
 
-header.pL-container{
+header.pL-container {
+  background-image: url(https://www.w3schools.com/w3images/forestbridge.jpg);
+  background-position: center;
+  background-size: cover;
   padding: 128px 16px;
 }
 
-.pL-red, .pL-hover-red:hover {
+.pL-red,
+.pL-hover-red:hover {
   color: #fff;
-background-color: #0F2924;
+  background-color: #0f2924;
 }
 
 .pL-center {
@@ -394,7 +402,8 @@ div.container {
   max-width: 980px;
 }
 
-.pL-content, .pL-auto {
+.pL-content,
+.pL-auto {
   margin-left: auto;
   margin-right: auto;
 }
@@ -404,7 +413,8 @@ div.container {
   width: 66.66666%;
 }
 
-.pL-twothird h1, .pL-twothird h5 {
+.pL-twothird h1,
+.pL-twothird h5 {
   font-weight: 400;
   margin: 10px 0;
 }
@@ -454,7 +464,7 @@ img.fa-coffee {
 }
 
 .pL-opacity {
-  opacity: 0.60;
+  opacity: 0.6;
 }
 
 /*======================
@@ -479,5 +489,5 @@ img.fa-coffee {
 }
 
 .cal-container {
-  padding: .01em 16px;
+  padding: 0.01em 16px;
 }

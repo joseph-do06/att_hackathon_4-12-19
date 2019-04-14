@@ -8,8 +8,7 @@ const PersonalityLayout = props => {
         className="pL-container pL-red pL-center"
         style={{ padding: "128px 16px" }}
       >
-        <h1 className="pL-margin pL-jumbo">START PAGE</h1>
-        <p className="pL-xlarge">Template by pL.css</p>
+        <h1 className="pL-margin pL-jumbo">Personality Breakdown</h1>
         <button className="pL-button pL-padding-large btn btn-outline-info pL-large pL-margin-top">
           Get Started
         </button>
