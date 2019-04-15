@@ -34,7 +34,7 @@ namespace Sabio.Services
                 };
                 paramCol.Add(parm);
                 paramCol.AddWithValue("@_Username", model.Username);
-                paramCol.AddWithValue("@_ModifiedBy", model.ModifiedBy);
+                paramCol.AddWithValue("@_ModifiedBy", model.Username);
                 paramCol.AddWithValue("@_MessageId", model.MessageId);
                 paramCol.AddWithValue("@_Message", model.Message);
             }

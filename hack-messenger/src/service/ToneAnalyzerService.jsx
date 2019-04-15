@@ -13,6 +13,7 @@ class ToneAnalyzerService {
         password: "oOd0txFJhuRKte3lRX99XdHHUfs5LKEDlAdqD33RSk-x"
       }
     };
+    axios.defaults.withCredentials = false;
     axios(url, config)
       .then(onSuccess)
       .catch(onError);
